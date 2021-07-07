@@ -44,7 +44,19 @@ protected:
 	class AReglasJuego* ReglasJuego;//puntero al game mode principal0.
 
 	
+private:
+	FVector posicionInicial;
 
+	UPROPERTY(EditAnywhere)
+	float velocidadInicial = 50;
 
+	UPROPERTY(EditAnywhere)
+	float currentSpeed = 0;
+
+	bool estoyAcelerando = false;
+
+private:
+	void ActivarSuperVelocidad();
+	void DesactivarSuperVelocidad();
 
 };

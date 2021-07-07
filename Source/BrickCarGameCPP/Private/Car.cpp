@@ -10,15 +10,6 @@
 #include "Components/BoxComponent.h"
 
 
-// bug al importar librerias relacionadas a LevelSequence
-// Estoy recreando un proyecto programado totalmente en blueprint en C++, sin embargo encuentro problemas relacionados a importar 
-#include "LevelSequence.h" //// BUG REPORTED
-#include "LevelSequencePlayer.h"//// BUG REPORTED
-#include "MovieSceneSequencePlayer.h"
-#include "LevelSequenceActor.h"//// BUG REPORTED
-
-
-
 
 
 // Sets default values
@@ -50,11 +41,14 @@ void ACar::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	ReglasJuego = Cast<AReglasJuego>(GetWorld()->GetAuthGameMode());
+	ReglasJuego = Cast<AReglasJuego>(GetWorld()->GetAuthGameMode());//obtengo el game mode
+
+	posicionInicial = GetActorLocation();//posicion inicial
+
+	ReglasJuego->dificultadVelocidad = velocidadInicial;//velocidad inicial
 	
-	UE_LOG(LogTemp, Display, TEXT( "Puntaje de gameMode, %f " ), ReglasJuego->superVelocidad );
-	
-	
+	currentSpeed = ReglasJuego->dificultadVelocidad;//velocidad inicial
+
 }
 
 // Called every frame
@@ -68,6 +62,28 @@ void ACar::Tick(float DeltaTime)
 void ACar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	
+
+	PlayerInputComponent->BindAction("", IE_Pressed, this, &ACar::ActivarSuperVelocidad );//si presiono
+	PlayerInputComponent->BindAction("", IE_Released, this, &ACar::DesactivarSuperVelocidad );//si suelto
+
 }
 
+void ACar::ActivarSuperVelocidad()
+{
+	if( !ReglasJuego->IfLose() && !ReglasJuego->IFGameOver() )//sino es game over y no perdiste
+	{
+		currentSpeed = ReglasJuego->dificultadVelocidad;//obtengo la velocidad actual
+		ReglasJuego->dificultadVelocidad = ReglasJuego->superVelocidad;//super velocidad
+		estoyAcelerando = true;//estoy acelerando
+	}
+
+}
+
+void ACar::DesactivarSuperVelocidad()
+{
+	if( !ReglasJuego->IfLose() && !ReglasJuego->IFGameOver() ) //si el juego se esta ejecutando
+	{
+		ReglasJuego->dificultadVelocidad = currentSpeed;//la velocidad vuelve a la velocidad guardada antes de super velocidad
+		estoyAcelerando = false;//estoy acelerando
+	}
+}
