@@ -2,7 +2,6 @@
 
 
 #include "ReglasJuego.h"
-#include "..\Public\ReglasJuego.h"
 
 bool AReglasJuego::IfLose()
 {
