@@ -58,5 +58,7 @@ private:
 private:
 	void ActivarSuperVelocidad();
 	void DesactivarSuperVelocidad();
+	void MoverDerecha();
+	void MoverIzquierda();
 
 };

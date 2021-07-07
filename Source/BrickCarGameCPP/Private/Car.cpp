@@ -65,9 +65,11 @@ void ACar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("left_click_mouse", IE_Pressed, this, &ACar::ActivarSuperVelocidad );//si presiono
 	PlayerInputComponent->BindAction("left_click_mouse", IE_Released, this, &ACar::DesactivarSuperVelocidad );//si suelto
-
+	PlayerInputComponent->BindAction("Mover_derecha",IE_Pressed,this,&ACar::MoverDerecha);
+	PlayerInputComponent->BindAction("Mover_izquierda",IE_Pressed,this,&ACar::MoverIzquierda);
 }
 
+//super velocidad
 void ACar::ActivarSuperVelocidad()
 {
 	if( !ReglasJuego->IfLose() && !ReglasJuego->IFGameOver() )//sino es game over y no perdiste
@@ -85,5 +87,50 @@ void ACar::DesactivarSuperVelocidad()
 	{
 		ReglasJuego->dificultadVelocidad = currentSpeed;//la velocidad vuelve a la velocidad guardada antes de super velocidad
 		estoyAcelerando = false;//estoy acelerando
+	}
+}
+
+
+//mover derecha
+void ACar::MoverDerecha()
+{
+	if(!ReglasJuego->IfLose())//sino es game over
+	{
+		if(GetActorLocation().X < 500)
+		{
+			float moverDerecha = GetActorLocation().X + 1000;
+
+			FVector posicionNueva = FVector( 
+				moverDerecha,
+				GetActorLocation().Y,
+				GetActorLocation().Z 
+			);
+			
+			SetActorLocation( posicionNueva );
+
+			//activo sonido mover
+		}
+	}
+}
+
+//mover izquierda
+void ACar::MoverIzquierda()
+{
+	if(!ReglasJuego->IfLose())//sino es game over
+	{
+		if(GetActorLocation().X > -500)
+		{
+			float moverDerecha = GetActorLocation().X - 1000;//se resta a la posicion actual
+
+			FVector posicionNueva = FVector( 
+				moverDerecha,
+				GetActorLocation().Y,
+				GetActorLocation().Z 
+			);
+			
+			SetActorLocation( posicionNueva );
+
+			//activo sonido mover
+		}
 	}
 }
