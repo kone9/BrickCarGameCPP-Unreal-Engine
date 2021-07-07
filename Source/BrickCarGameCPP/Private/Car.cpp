@@ -63,8 +63,8 @@ void ACar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("", IE_Pressed, this, &ACar::ActivarSuperVelocidad );//si presiono
-	PlayerInputComponent->BindAction("", IE_Released, this, &ACar::DesactivarSuperVelocidad );//si suelto
+	PlayerInputComponent->BindAction("left_click_mouse", IE_Pressed, this, &ACar::ActivarSuperVelocidad );//si presiono
+	PlayerInputComponent->BindAction("left_click_mouse", IE_Released, this, &ACar::DesactivarSuperVelocidad );//si suelto
 
 }
 
