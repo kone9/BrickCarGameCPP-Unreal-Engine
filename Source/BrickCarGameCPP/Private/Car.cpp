@@ -9,10 +9,13 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 
-#include "LevelSequence.h"
-#include "LevelSequencePlayer.h"
+
+// bug al importar librerias relacionadas a LevelSequence
+// Estoy recreando un proyecto programado totalmente en blueprint en C++, sin embargo encuentro problemas relacionados a importar 
+#include "LevelSequence.h" //// BUG REPORTED
+#include "LevelSequencePlayer.h"//// BUG REPORTED
 #include "MovieSceneSequencePlayer.h"
-#include "LevelSequenceActor.h"
+#include "LevelSequenceActor.h"//// BUG REPORTED
 
 
 
