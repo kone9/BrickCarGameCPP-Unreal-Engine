@@ -34,7 +34,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UStaticMeshComponent* car;//auto
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	class UBoxComponent* box;//caja de colision
 
 	UPROPERTY(VisibleAnywhere)
@@ -60,5 +60,10 @@ private:
 	void DesactivarSuperVelocidad();
 	void MoverDerecha();
 	void MoverIzquierda();
+
+public:
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 
 };

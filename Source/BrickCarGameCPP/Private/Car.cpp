@@ -8,9 +8,9 @@
 #include "Components/AudioComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/SceneComponent.h"
 
-
-
+// #define AddDynamic(UserObject,FuncName) __Internal_AddDynamic( UserObject, FuncName, STATIC_FUNCTION_FNAME( TEXT( #FuncName ) ) )
 
 // Sets default values
 ACar::ACar()
@@ -19,19 +19,23 @@ ACar::ACar()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	root = CreateDefaultSubobject<USceneComponent>(TEXT("CarRoot"));
-
 	RootComponent = root;
 
 	car = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("car"));
-
 	car->AttachTo(root);
 
-	box = CreateDefaultSubobject<UBoxComponent>(TEXT("box"));
 
+	box = CreateDefaultSubobject<UBoxComponent>(TEXT("box"));
 	box->AttachTo(root);
+	// box->SetGenerateOverlapEvents(true);
+	// box->SetCollisionResponseToAllChannels(ECR_Overlap);
+	// box->SetCollisionEnabled(ECollisionEnabled::QueryOnly);//activamos la dinamica
+	// box->SetCollisionProfileName("Car");//agregamos a la mascara de colision
+	// box->OnComponentBeginOverlap.AddDynamic(this, &ACar::OnTriggerEnter);//creo la dinamica para el trigger en el root
+	
+	
 
 	MoverSound = CreateDefaultSubobject<UAudioComponent>(TEXT("MoverSound"));
-
 	MoverSound->AttachTo(root);
 
 }
@@ -49,6 +53,7 @@ void ACar::BeginPlay()
 	
 	currentSpeed = ReglasJuego->dificultadVelocidad;//velocidad inicial
 
+	box->OnComponentBeginOverlap.AddDynamic(this, &ACar::OnOverlapBegin);
 }
 
 // Called every frame
@@ -133,4 +138,10 @@ void ACar::MoverIzquierda()
 			//activo sonido mover
 		}
 	}
+}
+
+//cuando algo entra
+void ACar::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)//recibe 2 parametros que son punteros osea objetos de escena, yo y el otros
+{
+	UE_LOG(LogTemp, Warning, TEXT("colisionaron dos objetos"));
 }
