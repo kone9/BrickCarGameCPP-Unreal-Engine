@@ -22,7 +22,7 @@ class BRICKCARGAMECPP_API AReglasJuego : public AGameModeBase
 		UPROPERTY(EditAnywhere) int puntosParaGanar;
 		UPROPERTY(EditAnywhere) bool lose;
 		UPROPERTY(EditAnywhere) bool gameOver;
-		UPROPERTY(EditAnywhere) float dificultadVelocidad;
+		UPROPERTY(EditAnywhere) float dificultadVelocidad = 50;
 		UPROPERTY(EditAnywhere) float superVelocidad;
 
 		bool IfLose();
