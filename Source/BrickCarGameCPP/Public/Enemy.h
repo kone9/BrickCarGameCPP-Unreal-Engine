@@ -29,7 +29,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent * root; //root de todo el blueprint
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* carEnemy;//auto
 
 	UPROPERTY(VisibleAnywhere)
@@ -56,4 +56,6 @@ private:
 	FVector initialPosition;//posicion de reinicio
 	
 	FVector diferenciaEnReinicio;
+
+	float CalculePositonAleatoryX();//calcular posicion aleatoria en X
 };

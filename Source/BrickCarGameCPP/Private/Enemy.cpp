@@ -34,6 +34,14 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	ReglasJuego =  Cast<AReglasJuego>(GetWorld()->GetAuthGameMode());
+	//inicio la posición aleatoria en X
+	SetActorLocation( FVector(
+		CalculePositonAleatoryX(),
+		GetActorLocation().Y,
+		GetActorLocation().Z
+		)
+	);
+
 }
 
 // Called every frame
@@ -46,11 +54,10 @@ void AEnemy::Tick(float DeltaTime)
 
 		if(GetActorLocation().Y > cuandoLlegaHasta)//cuando llega hasta esta posición
 		{
-			
 			diferenciaEnReinicio.Y = GetActorLocation().Y - cuandoLlegaHasta;//diferencia de reinicio para evitar el desplazamiento
-
+			//reinicia posicion
 			SetActorLocation( FVector (
-				GetActorLocation().X,
+				CalculePositonAleatoryX(),
 				posicionDeReinicio + diferenciaEnReinicio.Y,//sino uso la diferencia queda desplazado
 				GetActorLocation().Z
 				)
@@ -58,7 +65,19 @@ void AEnemy::Tick(float DeltaTime)
 		}
 
 	}
-
-
 }
 
+
+//calcular posicion aleatoria para usarlo en el eje X
+float AEnemy::CalculePositonAleatoryX()
+{
+	float posicionAleatoria = FMath::RandRange(0,1);
+	if(posicionAleatoria == 0)
+	{
+		return 500;
+	}
+	else
+	{
+		return -500;
+	}
+}
