@@ -24,9 +24,11 @@ AEnemy::AEnemy()
 	boxTrigger = CreateDefaultSubobject<UBoxComponent>(TEXT("boxTrigger"));
 	boxTrigger->AttachTo(root);
 
+	//trigger para puntaje
 	BoxTriggerScore = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxTriggerScore"));
 	BoxTriggerScore->AttachTo(root);
 	
+
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +36,7 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	ReglasJuego =  Cast<AReglasJuego>(GetWorld()->GetAuthGameMode());
+	
 	//inicio la posición aleatoria en X
 	SetActorLocation( FVector(
 		CalculePositonAleatoryX(),
@@ -41,6 +44,8 @@ void AEnemy::BeginPlay()
 		GetActorLocation().Z
 		)
 	);
+
+	BoxTriggerScore->OnComponentBeginOverlap.AddDynamic(this,&AEnemy::OnComponentOverlapBeginBoxTriggerScore);//creo la dinamica
 
 }
 
@@ -79,5 +84,14 @@ float AEnemy::CalculePositonAleatoryX()
 	else
 	{
 		return -500;
+	}
+}
+
+
+void AEnemy::OnComponentOverlapBeginBoxTriggerScore(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)//recibe 2 parametros que son punteros osea objetos de escena, yo y el otros
+{
+	if( OtherActor->GetRootComponent()->ComponentHasTag( FName("carPlayer") ) )//si tiene el root component el tag car playereste tag
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Ganaste puntos"));
 	}
 }

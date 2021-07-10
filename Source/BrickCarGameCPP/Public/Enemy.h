@@ -26,17 +26,13 @@ public:
 
 public:
 	//componentes principales
-	UPROPERTY(VisibleAnywhere)
-	USceneComponent * root; //root de todo el blueprint
+	UPROPERTY(VisibleAnywhere) USceneComponent * root; //root de todo el blueprint
 
-	UPROPERTY(EditAnywhere)
-	class UStaticMeshComponent* carEnemy;//auto
+	UPROPERTY(VisibleAnywhere) class UStaticMeshComponent* carEnemy;//auto
 
-	UPROPERTY(VisibleAnywhere)
-	class UBoxComponent* boxTrigger;//caja de colision
+	UPROPERTY(VisibleAnywhere) class UBoxComponent* boxTrigger;//caja de colision
 
-	UPROPERTY(VisibleAnywhere)
-	class UBoxComponent* BoxTriggerScore;//caja de colision
+	UPROPERTY(VisibleAnywhere) class UBoxComponent* BoxTriggerScore;//caja de colision
 
 
 protected:
@@ -48,6 +44,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float posicionDeReinicio = -7000;
+
+	UFUNCTION()
+	void OnComponentOverlapBeginBoxTriggerScore(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);//recibe 2 parametros que son punteros osea objetos de escena, yo y el otros
 	
 
 private:
