@@ -15,16 +15,17 @@ class BRICKCARGAMECPP_API AReglasJuego : public AGameModeBase
 	GENERATED_BODY()
 	
 	public:
-		UPROPERTY(EditAnywhere) int vidas;
-		UPROPERTY(EditAnywhere) int score;
+		UPROPERTY(EditAnywhere,BlueprintReadOnly) int vidas;
+		UPROPERTY(EditAnywhere,BlueprintReadOnly) int score;
 		UPROPERTY(EditAnywhere) int goal;
-		UPROPERTY(EditAnywhere) int higtScore;
+		UPROPERTY(EditAnywhere,BlueprintReadOnly) int higtScore;
 		UPROPERTY(EditAnywhere) int puntosParaGanar;
 		UPROPERTY(EditAnywhere) bool lose;
 		UPROPERTY(EditAnywhere) bool gameOver;
-		UPROPERTY(EditAnywhere) float dificultadVelocidad = 50;
+		UPROPERTY(EditAnywhere,BlueprintReadOnly) float dificultadVelocidad = 50;
 		UPROPERTY(EditAnywhere) float superVelocidad;
-
+		
+		
 		bool IfLose();
 		bool IFGameOver();
 

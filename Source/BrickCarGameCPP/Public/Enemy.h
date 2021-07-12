@@ -57,4 +57,5 @@ private:
 	FVector diferenciaEnReinicio;
 
 	float CalculePositonAleatoryX();//calcular posicion aleatoria en X
+
 };

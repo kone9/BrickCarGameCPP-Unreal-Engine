@@ -93,5 +93,6 @@ void AEnemy::OnComponentOverlapBeginBoxTriggerScore(UPrimitiveComponent* Overlap
 	if( OtherActor->GetRootComponent()->ComponentHasTag( FName("carPlayer") ) )//si tiene el root component el tag car playereste tag
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Ganaste puntos"));
+		ReglasJuego->score += 100;//sumo 100 de puntaje
 	}
 }
