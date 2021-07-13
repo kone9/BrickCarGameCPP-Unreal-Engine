@@ -9,6 +9,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/SceneComponent.h"
+#include "Enemy.h"
 
 // #define AddDynamic(UserObject,FuncName) __Internal_AddDynamic( UserObject, FuncName, STATIC_FUNCTION_FNAME( TEXT( #FuncName ) ) )
 
@@ -143,5 +144,11 @@ void ACar::MoverIzquierda()
 //cuando algo entra activo eventos
 void ACar::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)//recibe 2 parametros que son punteros osea objetos de escena, yo y el otros
 {
-	
+	if(OtherComp->ComponentHasTag("carEnemy") && OtherActor != this)//si el componente tiene el tag CarEnemy y es distinto de este mismo
+	{
+		ReglasJuego->vidas -=1;//descuento una vida
+		UE_LOG(LogTemp, Warning, TEXT("Chocaste contra el enemigo"));
+		ReglasJuego->lose = true;
+		SetActorLocation(posicionInicial);//vuelvo a la posición inicial
+	}
 }

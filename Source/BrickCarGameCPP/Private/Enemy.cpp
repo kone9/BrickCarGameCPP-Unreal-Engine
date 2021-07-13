@@ -90,7 +90,7 @@ float AEnemy::CalculePositonAleatoryX()
 
 void AEnemy::OnComponentOverlapBeginBoxTriggerScore(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)//recibe 2 parametros que son punteros osea objetos de escena, yo y el otros
 {
-	if( OtherActor->GetRootComponent()->ComponentHasTag( FName("carPlayer") ) )//si tiene el root component el tag car playereste tag
+	if( OtherActor->GetRootComponent()->ComponentHasTag( FName("carPlayer") ) && OtherActor != this )//si tiene el root component el tag car playereste tag
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Ganaste puntos"));
 		ReglasJuego->score += 100;//sumo 100 de puntaje
