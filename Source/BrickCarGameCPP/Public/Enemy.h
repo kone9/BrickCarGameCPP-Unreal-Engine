@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Enemy.generated.h"
 
+
+
 UCLASS()
 class BRICKCARGAMECPP_API AEnemy : public AActor
 {
@@ -48,6 +50,7 @@ protected:
 	UFUNCTION()
 	void OnComponentOverlapBeginBoxTriggerScore(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);//recibe 2 parametros que son punteros osea objetos de escena, yo y el otros
 	
+	class ACar* car;//referencia al car de la esncea
 
 private:
 	class AReglasJuego* ReglasJuego;//puntero al game mode principal0.
@@ -58,4 +61,12 @@ private:
 
 	float CalculePositonAleatoryX();//calcular posicion aleatoria en X
 
+	void Reposicionar();
+
+	//buscar jugador
+	FTimerHandle buscarJugador;
+
+	UPROPERTY(EditAnywhere) float tiempoParaBuscarCar = 0.2f;
+
+	void BuscarJugador();
 };

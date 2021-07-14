@@ -7,6 +7,7 @@
 #include "Car.generated.h"
 
 
+DECLARE_DELEGATE(EventoMurioJugador)
 UCLASS()
 class BRICKCARGAMECPP_API ACar : public APawn
 {
@@ -15,6 +16,9 @@ class BRICKCARGAMECPP_API ACar : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ACar();
+
+	//delegados eventos dispacher
+	EventoMurioJugador ReposicionarEnemigoAlMorirEvento;
 
 protected:
 	// Called when the game starts or when spawned

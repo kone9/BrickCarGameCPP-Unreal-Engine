@@ -6,6 +6,10 @@
 #include "ReglasJuego.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
+#include "Car.h"
+#include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
+
 
 
 // Sets default values
@@ -37,6 +41,8 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 	ReglasJuego =  Cast<AReglasJuego>(GetWorld()->GetAuthGameMode());
 	
+	initialPosition = GetActorLocation();//obtengo la posición inicial
+
 	//inicio la posición aleatoria en X
 	SetActorLocation( FVector(
 		CalculePositonAleatoryX(),
@@ -46,6 +52,9 @@ void AEnemy::BeginPlay()
 	);
 
 	BoxTriggerScore->OnComponentBeginOverlap.AddDynamic(this,&AEnemy::OnComponentOverlapBeginBoxTriggerScore);//creo la dinamica
+
+
+	GetWorldTimerManager().SetTimer(buscarJugador, this, &AEnemy::BuscarJugador, tiempoParaBuscarCar, false);	
 
 }
 
@@ -95,4 +104,29 @@ void AEnemy::OnComponentOverlapBeginBoxTriggerScore(UPrimitiveComponent* Overlap
 		UE_LOG(LogTemp, Warning, TEXT("Ganaste puntos"));
 		ReglasJuego->score += 100;//sumo 100 de puntaje
 	}
+}
+
+//reposiciona al auto en la posicion enicial con el X aleatorio
+void AEnemy::Reposicionar()
+{
+	SetActorLocation( FVector(
+		CalculePositonAleatoryX(),
+		initialPosition.Y,
+		initialPosition.Z
+		)
+	);
+}
+
+void AEnemy::BuscarJugador()
+{
+	car = Cast<ACar>(UGameplayStatics::GetActorOfClass(GetWorld(), ACar::StaticClass() ));//busco el car por la clase funciona buscando la clase padre
+	if(car == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No existe esa clase en el juego"));
+	}
+	else
+	{
+		car->ReposicionarEnemigoAlMorirEvento.BindUObject(this,&AEnemy::Reposicionar);//ya tengo el evento activado
+	}
+
 }
