@@ -150,7 +150,8 @@ void ACar::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 		UE_LOG(LogTemp, Warning, TEXT("Chocaste contra el enemigo"));
 		ReglasJuego->lose = true;
 		SetActorLocation(posicionInicial);//vuelvo a la posición inicial
-		ReposicionarEnemigoAlMorirEvento.ExecuteIfBound();//ejecuto el evento reposicionar el enemigo
+		// ReposicionarEnemigoAlMorirEvento.ExecuteIfBound();//ejecuto el evento reposicionar el enemigo
+		ReposicionarEnemigoAlMorirEvento.Broadcast();//ejecuto el delegado para avisar en todos los demás.
 	}
 }
 

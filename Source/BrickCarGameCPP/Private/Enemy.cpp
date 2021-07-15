@@ -41,8 +41,8 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 	ReglasJuego =  Cast<AReglasJuego>(GetWorld()->GetAuthGameMode());
 	
-	initialPosition = GetActorLocation();//obtengo la posición inicial
 
+	initialPosition = GetActorLocation();//obtengo la posición inicial
 	//inicio la posición aleatoria en X
 	SetActorLocation( FVector(
 		CalculePositonAleatoryX(),
@@ -106,7 +106,7 @@ void AEnemy::OnComponentOverlapBeginBoxTriggerScore(UPrimitiveComponent* Overlap
 	}
 }
 
-//reposiciona al auto en la posicion enicial con el X aleatorio
+//reposiciona al auto en la posicion enicial con el X aleatorio es una Ufunction que funciona con unn delegado
 void AEnemy::Reposicionar()
 {
 	SetActorLocation( FVector(
@@ -115,7 +115,10 @@ void AEnemy::Reposicionar()
 		initialPosition.Z
 		)
 	);
+	UE_LOG(LogTemp, Warning, TEXT("Reposicionando CarEnemy"));
+
 }
+
 
 void AEnemy::BuscarJugador()
 {
@@ -126,7 +129,9 @@ void AEnemy::BuscarJugador()
 	}
 	else
 	{
-		car->ReposicionarEnemigoAlMorirEvento.BindUObject(this,&AEnemy::Reposicionar);//ya tengo el evento activado
+		UE_LOG(LogTemp, Warning, TEXT("Existe esa clase CAR"));
+		// car->ReposicionarEnemigoAlMorirEvento.BindUObject(this,&AEnemy::Reposicionar);//ya tengo el evento activado
+		car->ReposicionarEnemigoAlMorirEvento.AddUObject(this, &AEnemy::Reposicionar);
 	}
 
 }

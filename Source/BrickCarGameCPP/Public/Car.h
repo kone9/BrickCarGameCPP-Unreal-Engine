@@ -7,7 +7,8 @@
 #include "Car.generated.h"
 
 
-DECLARE_DELEGATE(EventoMurioJugador)
+// DECLARE_DELEGATE(EventoMurioJugador)
+DECLARE_MULTICAST_DELEGATE(EventoMurioJugador)//es un multicast se usa e muchos lados
 UCLASS()
 class BRICKCARGAMECPP_API ACar : public APawn
 {

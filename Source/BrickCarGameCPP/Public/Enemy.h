@@ -61,12 +61,14 @@ private:
 
 	float CalculePositonAleatoryX();//calcular posicion aleatoria en X
 
-	void Reposicionar();
-
-	//buscar jugador
+private:
+	//buscar jugador y uso del delegado
 	FTimerHandle buscarJugador;
 
 	UPROPERTY(EditAnywhere) float tiempoParaBuscarCar = 0.2f;
 
 	void BuscarJugador();
+
+	UFUNCTION()//para usar con delegado importante que sea UFUNCTION
+	void Reposicionar();//para usar con el delegado importantisimo que sea una UFUNCTIONs
 };
